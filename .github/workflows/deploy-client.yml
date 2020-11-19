@@ -33,15 +33,15 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Docker build  
-      run: cd client && docker build -t besamly2018/rpcmicro-client .
-    - name : Docker login
-      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      env:
-        DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-    - name: Docker image push
-      run: docker push besamly2018/rpcmicro-client
+    # - name: Docker build  
+    #   run: cd client && docker build -t besamly2018/rpcmicro-client .
+    # - name : Docker login
+    #   run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    #   env:
+    #     DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+    #     DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+    # - name: Docker image push
+    #   run: docker push besamly2018/rpcmicro-client
       
     # Setup gcloud CLI
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@0.1.3
