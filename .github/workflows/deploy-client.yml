@@ -37,14 +37,16 @@ jobs:
       #   run: docker push besamly2018/rpcmicro-client
 
       # Setup gcloud CLI
-      - uses: actions-hub/gcloud@master
-        env:
-          PROJECT_ID: ${{secrets.PROJECT_ID}}
-          APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
+      # - uses: actions-hub/gcloud@master
+      #   env:
+      #     PROJECT_ID: ${{secrets.PROJECT_ID}}
+      #     APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
         
-      - name: echo secret variables
-        run: |-
-          echo ${{secrets.PROJECT_ID}}
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '270.0.0'
+          service_account_email: ${{ secrets.GKE_EMAIL }}
+          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
       # Configure Docker to use the gcloud command-line tool as a credential
       # helper for authentication
@@ -54,7 +56,6 @@ jobs:
       # Get the GKE credentials so we can deploy to the cluster
       - name: Get cluster context
         run: |-
-          gcloud auth login
           gcloud container clusters get-credentials ibct-microservices-cluster-1
 
       - name: Rollout deployment
