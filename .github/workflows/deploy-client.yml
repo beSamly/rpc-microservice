@@ -17,55 +17,48 @@ on:
     branches:
       - master
     paths:
-      - 'client/**'
-
-env:
-  # PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  # GKE_CLUSTER: cluster-1    # TODO: update to cluster name
-  # GKE_ZONE: us-central1-c   # TODO: update to cluster zone
-  # DEPLOYMENT_NAME: gke-test # TODO: update to deployment name
-  # IMAGE: static-site
+      - "client/**"
 
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    # - name: Docker build  
-    #   run: cd client && docker build -t besamly2018/rpcmicro-client .
-    # - name : Docker login
-    #   run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    #   env:
-    #     DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-    #     DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-    # - name: Docker image push
-    #   run: docker push besamly2018/rpcmicro-client
-      
-    # Setup gcloud CLI
-    - uses: actions-hub/gcloud@master
-      env:
+      - name: Checkout
+        uses: actions/checkout@v2
+      # - name: Docker build
+      #   run: cd client && docker build -t besamly2018/rpcmicro-client .
+      # - name : Docker login
+      #   run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      #   env:
+      #     DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+      #     DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      # - name: Docker image push
+      #   run: docker push besamly2018/rpcmicro-client
+
+      # Setup gcloud CLI
+      - uses: actions-hub/gcloud@master
+        env:
           PROJECT_ID: ${{secrets.GCLOUD_PROJECT_ID}}
           APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
-    - name: echo secret variables
-      run: |-
-        echo ${{secrets.GCLOUD_PROJECT_ID}}
+      - name: echo secret variables
+        run: |-
+          echo ${{secrets.GCLOUD_PROJECT_ID}}
 
-    # Configure Docker to use the gcloud command-line tool as a credential
-    # helper for authentication
-    # - run: |-
-    #     gcloud --quiet auth configure-docker
+      # Configure Docker to use the gcloud command-line tool as a credential
+      # helper for authentication
+      # - run: |-
+      #     gcloud --quiet auth configure-docker
 
-    # Get the GKE credentials so we can deploy to the cluster
-    - name: Get cluster context
-      run: |-
-        gcloud container clusters get-credentials ibct-microservices-cluster-1
+      # Get the GKE credentials so we can deploy to the cluster
+      - name: Get cluster context
+        run: |-
+          gcloud container clusters get-credentials ibct-microservices-cluster-1
 
-    - name: Rollout deployment
-      run: |-
-        kubectl get pods
-        kubectl rollout restart deployment hasura
+      - name: Rollout deployment
+        run: |-
+          kubectl get pods
+          kubectl rollout restart deployment hasura
 
 #     # Build the Docker image
 #     - name: Build
