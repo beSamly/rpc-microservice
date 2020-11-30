@@ -37,7 +37,7 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
 
       - name: Docker image push
-        run: docker push besamly2018/rpcmicro-client
+        run: docker push besamly2018/rpc-client
 
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
