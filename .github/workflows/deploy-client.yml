@@ -41,9 +41,10 @@ jobs:
         env:
           PROJECT_ID: ${{secrets.PROJECT_ID}}
           APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
+        
+      - name: echo secret variables
         run: |-
-          gcloud container clusters get-credentials ibct-microservices-cluster-1
-          kubectl get pods
+          echo ${{secrets.PROJECT_ID}}
 
       # Configure Docker to use the gcloud command-line tool as a credential
       # helper for authentication
@@ -51,14 +52,15 @@ jobs:
       #     gcloud --quiet auth configure-docker
 
       # Get the GKE credentials so we can deploy to the cluster
-      # - name: Get cluster context
-      #   run: |-
-      #     gcloud container clusters get-credentials ibct-microservices-cluster-1
+      - name: Get cluster context
+        run: |-
+          gcloud auth login
+          gcloud container clusters get-credentials ibct-microservices-cluster-1
 
-      # - name: Rollout deployment
-      #   run: |-
-      #     kubectl get pods
-      #     kubectl rollout restart deployment hasura
+      - name: Rollout deployment
+        run: |-
+          kubectl get pods
+          kubectl rollout restart deployment hasura
 
 #     # Build the Docker image
 #     - name: Build
