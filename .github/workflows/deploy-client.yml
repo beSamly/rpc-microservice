@@ -56,7 +56,7 @@ jobs:
       # Get the GKE credentials so we can deploy to the cluster
       - name: Get cluster context
         run: |-
-          gcloud container clusters get-credentials ibct-microservices-cluster-1
+          gcloud container clusters get-credentials ibct-microservices-cluster-1 --region asia-northeast1-a	
 
       - name: Rollout deployment
         run: |-
