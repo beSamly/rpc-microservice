@@ -50,8 +50,8 @@ jobs:
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: "270.0.0"
-          service_account_email: $GKE_EMAIL
-          service_account_key: $GOOGLE_APPLICATION_CREDENTIALS
+          service_account_email: ${{secrets.GKE_EMAIL}}
+          service_account_key: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
 
       - name: Get GKE cluster context
         run: |-
