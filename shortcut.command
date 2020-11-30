@@ -5,3 +5,6 @@ alias kgin='kubectl get pods -n ingress-nginx'
 alias kgi='kubectl get ingress'
 alias k='f(){ kubectl "$@" }; f'
 alias kan='f(){ kubectl "$@" --all-namespaces -o wide;  unset -f f; }; f'
+
+gcloud revoke --all
+kubectl config delete-context [project name]

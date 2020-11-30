@@ -1,0 +1,1 @@
+{"version":3,"file":"Ethereum.js","sourceRoot":"","sources":["../../../src/config/modules/Ethereum.ts"],"names":[],"mappings":";;AAAA,2CAA4C;AAE5C,kBAAe,mBAAU,CACvB,UAAU,EACV,GAAQ,EAAE,CAAC,CAAC;IACV,UAAU,EAAE,OAAO,CAAC,GAAG,CAAC,WAAW;IACnC,gBAAgB,EAAE,gDAAgD;IAClE,KAAK,EAAE,SAAS;IAChB,oBAAoB,EAAE,iCAAiC;IACvD,OAAO,EAAE,CAAC;CACX,CAAC,CACH,CAAC"}

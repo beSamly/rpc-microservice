@@ -1,5 +1,4 @@
 apiVersion: extensions/v1beta1
-# apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-service
@@ -9,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-    - host: rpcmicro.dev
+    - host: test.dev
       http:
         paths:
 
@@ -61,4 +60,3 @@ spec:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/component: controller
-  loadBalancerIP: 35.243.93.33

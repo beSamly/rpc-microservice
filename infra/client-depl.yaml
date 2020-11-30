@@ -15,7 +15,7 @@ spec:
       containers:
         - name: client
           image: besamly2018/rpc-client
-          command: ["npm", "run", "start"]
+          command: ["npm", "run", "start:dev"]
           resources:
             requests:
               cpu: "50m"
