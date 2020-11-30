@@ -19,6 +19,17 @@ on:
     paths:
       - "client/**"
 
+env:
+  GKE_PROJECT: ibct-microservices
+  GKE_CLUSTER_NAME: ibct-microservices-cluster-1
+  GKE_REGION: asia-northeast1-a
+  GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
+  GOOGLE_APPLICATION_CREDENTIALS: ${{ secret.GOOGLE_APPLICATION_CREDENTIALS  }}
+  DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+  DOCKER_PASSWORD:  ${{secrets.DOCKER_PASSWORD}}
+  DOCKER_IMAGE_NAME: besamly2018/rpc-client
+  DEPLOYMENT_TO_ROLLOUT: client-depl
+
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
@@ -28,27 +39,25 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Docker build
-        run: cd client && docker build -t besamly2018/rpc-client .
+        run: cd client && docker build -t $DOCKER_IMAGE_NAME .
 
       - name: Docker login
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        env:
-          DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        
 
       - name: Docker image push
-        run: docker push besamly2018/rpc-client
+        run: docker push $DOCKER_IMAGE_NAME
 
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: "270.0.0"
-          service_account_email: ${{ secrets.GKE_EMAIL }}
-          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          service_account_email: $GKE_EMAIL 
+          service_account_key: $GOOGLE_APPLICATION_CREDENTIALS 
 
       # Get the GKE credentials so we can deploy to the cluster
       - name: Get cluster context
         run: |-
-          gcloud container clusters get-credentials ibct-microservices-cluster-1 --region asia-northeast1-a --project ibct-microservices
+          gcloud container clusters get-credentials $GKE_CLUSTER_NAME --region $GKE_REGION --project $GKE_PROJECT
 
       - name: Test if context is succesfully loaded
         run: |-
@@ -56,4 +65,4 @@ jobs:
 
       - name: Rollout client deployment
         run: |-
-          kubectl rollout restart deployment client-depl
+          kubectl rollout restart deployment $DEPLOYMENT_TO_ROLLOUT
