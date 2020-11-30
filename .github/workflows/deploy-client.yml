@@ -47,9 +47,9 @@ jobs:
       - name: Docker image push
         run: docker push $DOCKER_IMAGE_NAME
 
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      - uses: google-github-actions/setup-gcloud
         with:
-          version: "270.0.0"
+          # version: "270.0.0"
           service_account_email: ${{secrets.GKE_EMAIL}}
           service_account_key: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
 
