@@ -39,11 +39,11 @@ jobs:
       # Setup gcloud CLI
       - uses: actions-hub/gcloud@master
         env:
-          PROJECT_ID: ${{secrets.GCLOUD_PROJECT_ID}}
+          PROJECT_ID: ${{secrets.PROJECT_ID}}
           APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
       - name: echo secret variables
         run: |-
-          echo ${{secrets.GCLOUD_PROJECT_ID}}
+          echo ${{secrets.PROJECT_ID}}
 
       # Configure Docker to use the gcloud command-line tool as a credential
       # helper for authentication
