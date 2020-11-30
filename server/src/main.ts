@@ -60,6 +60,5 @@ async function bootstrap() {
     " nats url : ",
     process.env.NATS_URL || "nats://localhost:4222"
   );
-  console.log("conigomidel : ", EthereumConfigModule());
 }
 bootstrap();
