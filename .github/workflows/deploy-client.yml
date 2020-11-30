@@ -22,11 +22,11 @@ on:
 env:
   GKE_PROJECT: ibct-microservices
   GKE_CLUSTER_NAME: ibct-microservices-cluster-1
-  GKE_REGION: asia-northeast1-a
-  GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
-  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS  }}
+  GKE_REGION: asia-northeast1-a 
+  GKE_EMAIL: ${{secrets.GKE_EMAIL}} //client_email field in json file.
+  GOOGLE_APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}} // This should be base 64 encoded json file.
   DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-  DOCKER_PASSWORD:  ${{secrets.DOCKER_PASSWORD}}
+  DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
   DOCKER_IMAGE_NAME: besamly2018/rpc-client
   DEPLOYMENT_TO_ROLLOUT: client-depl
 
@@ -43,7 +43,6 @@ jobs:
 
       - name: Docker login
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        
 
       - name: Docker image push
         run: docker push $DOCKER_IMAGE_NAME
@@ -51,11 +50,10 @@ jobs:
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: "270.0.0"
-          service_account_email: $GKE_EMAIL 
-          service_account_key: $GOOGLE_APPLICATION_CREDENTIALS 
+          service_account_email: $GKE_EMAIL
+          service_account_key: $GOOGLE_APPLICATION_CREDENTIALS
 
-      # Get the GKE credentials so we can deploy to the cluster
-      - name: Get cluster context
+      - name: Get GKE cluster context
         run: |-
           gcloud container clusters get-credentials $GKE_CLUSTER_NAME --region $GKE_REGION --project $GKE_PROJECT
 
