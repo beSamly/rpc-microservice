@@ -23,8 +23,8 @@ env:
   GKE_PROJECT: ibct-microservices
   GKE_CLUSTER_NAME: ibct-microservices-cluster-1
   GKE_REGION: asia-northeast1-a 
-  GKE_EMAIL: ${{secrets.GKE_EMAIL}} //client_email field in json file.
-  GOOGLE_APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}} // This should be base 64 encoded json file.
+  GKE_EMAIL: ${{secrets.GKE_EMAIL}}
+  GOOGLE_APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
   DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
   DOCKER_IMAGE_NAME: besamly2018/rpc-client
