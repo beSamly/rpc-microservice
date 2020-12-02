@@ -26,21 +26,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # - name: Docker build
-      #   run: cd client && docker build -t $DOCKER_IMAGE_NAME .
+      - name: Docker build
+        run: cd client && docker build -t $DOCKER_IMAGE_NAME .
 
-      # - name: Docker login
-      #   run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - name: Docker login
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
-      # - name: Docker image push
-      #   run: docker push $DOCKER_IMAGE_NAME
+      - name: Docker image push
+        run: docker push $DOCKER_IMAGE_NAME
 
+      # !!! DEPRECATED VERSION 
       # - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       #   with:
       #     version: "270.0.0"
       #     service_account_email: ${{secrets.GKE_EMAIL}}
       #     service_account_key: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
 
+      # !!! NEW VERSION
       - uses: google-github-actions/setup-gcloud@master
         with:
           project_id: ibct-microservices
