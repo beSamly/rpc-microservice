@@ -45,7 +45,7 @@ export class AppController implements OnModuleInit {
     // .then(function () {
     //   // always executed
 
-    return "GET METHOD FOR TEST..!!!"; 
+    return "GET METHOD FOR TEST..!!!!"; 
   }
 
   @Get('self')
