@@ -1,40 +1,77 @@
-apiVersion: extensions/v1beta1
+# !!! OLD VERSION
+# apiVersion: extensions/v1beta1
+# kind: Ingress
+# metadata:
+#   name: ingress-service
+#   annotations:
+#     kubernetes.io/ingress.class: nginx
+#     nginx.ingress.kubernetes.io/use-regex: 'true'
+#     nginx.ingress.kubernetes.io/rewrite-target: /$2
+# spec:
+#   rules:
+#     - host: ledx-dev.io
+#       http:
+#         paths:
+#           - path: /client(/)(.*)
+#             backend:
+#               serviceName: client-srv
+#               servicePort: 3000
+
+#           - path: /hasura(/)(.*)
+#             backend:
+#               serviceName: hasura
+#               servicePort: 80
+
+#           - path: /nats(/)(.*)
+#             backend:
+#               serviceName: nats-srv
+#               servicePort: 8222
+
+# !!! NEW VERSION
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-service
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-    - host: rpcmicro.dev
+    - host: api.dev
       http:
         paths:
-
           - path: /client(/)(.*)
+            pathType: Prefix
             backend:
-              serviceName: client-srv
-              servicePort: 3000
+              service:
+                name: client-srv
+                port:
+                  number: 3000
 
-          # - path: /hasura(/)(.*)
-          #   backend:
-          #     serviceName: hasura
-          #     servicePort: 80
+          - path: /hasura(/)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: hasura
+                port:
+                  number: 80
 
           - path: /nats(/)(.*)
+            pathType: Prefix
             backend:
-              serviceName: nats-srv
-              servicePort: 8222
+              service:
+                name: nats-srv
+                port:
+                  number: 8222
 
-          
 ---
 apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: 'true'
-    service.beta.kubernetes.io/do-loadbalancer-hostname: 'www.ticketing-app-prod.xyz'
+    service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
+    service.beta.kubernetes.io/do-loadbalancer-hostname: "www.ticketing-app-prod.xyz"
   labels:
     helm.sh/chart: ingress-nginx-2.0.3
     app.kubernetes.io/name: ingress-nginx

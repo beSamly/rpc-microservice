@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: server-depl
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: server
@@ -18,11 +18,11 @@ spec:
           command: ["npm", "run", "start"]
           resources:
             requests:
-              cpu: "50m"
+              cpu: "500m"
               memory: "50Mi"
             limits:
-              cpu: "300m"
-              memory: "1000Mi"
+              cpu: "500m"
+              memory: "300Mi"
           env:
             - name: POD_ID
               valueFrom:
