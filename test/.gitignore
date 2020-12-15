@@ -1,4 +1,2 @@
 infra/hasura-depl.yaml
-**/node_modules
 node_modules/
-node_modules

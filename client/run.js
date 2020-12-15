@@ -1,17 +1,23 @@
 const axios = require("axios");
 
 successRate = 0;
+const podId = [];
+
 async function run() {
-  for (var i = 0; i < 100; i++) {
+  for (var i = 0; i < 2300; i++) {
     await axios
-      .post("http://rpcmicro.dev/add", {
-        data: [17, 12],
+      .post("http://ledx-dev.io/client/add", {
+        data: [107 + i, 122 + i],
       })
       .then(function(response) {
         // handle success
-        console.log("response data : ", response.data);
+        console.log("response data : ", JSON.stringify(response.data) + " ", i);
         if (response.data?.sum) {
           successRate = successRate + 1;
+
+          if (!podId.includes(response.data.sum)) {
+            podId.push(response.data.sum);
+          }
         }
       })
       .catch(function(error) {
@@ -22,7 +28,7 @@ async function run() {
         // always executed
       });
   }
-  console.log("success rate : ", successRate);
+  console.log("success rate : ", successRate, "Pod id length : ", podId.length);
 }
 
 run();

@@ -28,21 +28,21 @@ export class AppController {
   ) {}
 
   @GrpcMethod("AppController", "Accumulate")
-  accumulate(numberArray: INumberArray, metadata: any): ISumOfNumberArray {
+  accumulate(numberArray: INumberArray, metadata: any): any {
     // this.logger.log('Adding ' + process.env.data + numberArray.data.toString());
     this.logger.log(
       `${process.env.POD_ID} is processing Accumulate function\n`
     );
 
     var sum = this.mathService.accumulate(numberArray.data);
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < 15; i++) {
       sum = sum * sum;
       // console.log("sum : " , sum)
     }
 
     this.client.emit<number>("math_cal", 10);
     console.log("Publishing math_cal event");
-    return { sum };
+    return { sum: `${process.env.POD_ID}:${sum}` };
   }
 
   @Get()

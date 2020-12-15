@@ -1,0 +1,26 @@
+kubectl apply -f ./k8s/configmap
+kubectl apply -f ./k8s/secret
+
+# Custom command shortcut
+alias kdall="kubectl delete --all deployments && kubectl delete --all services && kubectl delete --all pods"
+alias kgp='kubectl get pods'
+alias kgs='kubectl get services'
+alias kgcm='kubectl get configmap'
+alias kgin='kubectl get pods -n ingress-nginx'
+alias kgi='kubectl get ingress'
+alias k='f(){ kubectl "$@" }; f'
+alias kan='f(){ kubectl "$@" --all-namespaces -o wide;  unset -f f; }; f'
+
+
+# Extra linkerd configuration for GKE private cluster.
+https://linkerd.io/2/reference/cluster-configuration/
+
+# Apply Linkerd to the cluster 
+1.install linkerd : brew install linkerd
+2.check installation : linkerd version
+3.Install linkerd onto the cluster : linkerd install | kubectl apply -f -
+4.Validate installation : linkerd check
+5. Create mesh service: 
+kubectl get [-n emojivoto] deploy -o yaml \
+  | linkerd inject - \
+  | kubectl apply -f -

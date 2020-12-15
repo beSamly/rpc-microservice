@@ -9,6 +9,9 @@ spec:
       app: client
   template:
     metadata:
+      #This annotation is required for linkerd to know the cpu request.
+      annotations:
+        config.linkerd.io/proxy-cpu-request: "0.5"
       labels:
         app: client
     spec:
@@ -32,8 +35,7 @@ spec:
               value: "server-srv:50051"
             - name: TEST_SRV_URL
               value: "http://test-srv:5000"
-                
-        
+
 ---
 apiVersion: v1
 kind: Service

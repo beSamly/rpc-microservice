@@ -23,10 +23,15 @@ let AppController = class AppController {
         this.grpcService = this.client.getService('AppController');
     }
     async accumulate(data) {
-        console.log("data is : ", data);
-        this.logger.log('Adding ' + data.toString());
-        console.log("about accumulate : ", this.grpcService.accumulate);
+        console.log("\ndata is : ", data);
+        this.logger.log(`${process.env.POD_ID} got request in accumulate function `);
         return this.grpcService.accumulate({ data });
+    }
+    async testGet() {
+        return "GET METHOD FOR TEST..!!!!";
+    }
+    async testSelf() {
+        return "SELF....";
     }
 };
 __decorate([
@@ -40,6 +45,18 @@ __decorate([
     __metadata("design:paramtypes", [Array]),
     __metadata("design:returntype", Promise)
 ], AppController.prototype, "accumulate", null);
+__decorate([
+    common_1.Get(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "testGet", null);
+__decorate([
+    common_1.Get('self'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "testSelf", null);
 AppController = __decorate([
     common_1.Controller()
 ], AppController);

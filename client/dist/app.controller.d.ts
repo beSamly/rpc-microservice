@@ -5,4 +5,6 @@ export declare class AppController implements OnModuleInit {
     private grpcService;
     onModuleInit(): void;
     accumulate(data: number[]): Promise<import("rxjs").Observable<any>>;
+    testGet(): Promise<string>;
+    testSelf(): Promise<string>;
 }

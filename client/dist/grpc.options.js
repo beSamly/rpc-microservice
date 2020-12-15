@@ -7,6 +7,7 @@ exports.microserviceOptions = {
     options: {
         package: 'app',
         protoPath: path_1.join(__dirname, '../src/app.proto'),
+        url: process.env.RPC_SRV_URL || '127.0.0.1:50001',
     },
 };
 //# sourceMappingURL=grpc.options.js.map
